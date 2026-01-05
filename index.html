@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeLink URL Decoder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    <line x1="12" y1="12" x2="12" y2="12"></line>
+                </svg>
+            </div>
+            <h1>SafeLink URL Decoder</h1>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <label for="safelink-input">Enter SafeLink URL:</label>
+                <textarea
+                    id="safelink-input"
+                    placeholder="Paste your SafeLink URL here (e.g., https://can01.safelinks.protection.outlook.com/?url=...)"
+                    rows="4"
+                ></textarea>
+                <button id="decode-btn" class="btn-primary">
+                    <span class="btn-text">Decode URL</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </div>
+
+            <div id="result-section" class="result-section hidden">
+                <div class="result-header">
+                    <h2>Decoded URL</h2>
+                    <button id="copy-btn" class="btn-copy" title="Copy to clipboard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy
+                    </button>
+                </div>
+                <div class="result-content">
+                    <a id="decoded-url" href="#" target="_blank" rel="noopener noreferrer"></a>
+                </div>
+            </div>
+
+            <div id="error-section" class="error-section hidden">
+                <div class="error-icon">⚠️</div>
+                <p id="error-message"></p>
+            </div>
+
+            <div class="info-section">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Paste URL:</strong> Enter the SafeLink URL from your email or browser</li>
+                    <li><strong>Decode:</strong> The tool extracts and decodes the destination URL</li>
+                    <li><strong>Privacy:</strong> All processing happens in your browser - nothing is sent to any server</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+            <p>All decoding happens locally in your browser. No data is transmitted or stored.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
