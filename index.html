@@ -1,74 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SafeLink URL Decoder</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeLink URL Decoder — Private Client-Side Decrypter</title>
+  <meta name="description" content="Securely decode Microsoft SafeLink URLs locally in your browser. Complete privacy with zero network calls or server tracking.">
+  
+  <!-- Paper Tiger design system styles -->
+  <link rel="stylesheet" href="tokens/tokens.css" />
+  <link rel="stylesheet" href="https://use.typekit.net/mxl1ncs.css" />
+  <link rel="stylesheet" href="tokens/fonts.css" />
+  <link rel="stylesheet" href="components/layout.css" />
+  <link rel="stylesheet" href="components/header.css" />
+  <link rel="stylesheet" href="components/footer.css" />
+  <link rel="stylesheet" href="components/buttons.css" />
+  <link rel="stylesheet" href="components/forms.css" />
+  
+  <!-- Custom page styling -->
+  <link rel="stylesheet" href="style.css" />
+  
+  <link rel="icon" href="assets/logos/favicon.ico" />
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                    <line x1="12" y1="12" x2="12" y2="12"></line>
-                </svg>
-            </div>
-            <h1>SafeLink URL Decoder</h1>
-        </header>
 
-        <main>
-            <div class="input-section">
-                <label for="safelink-input">Enter SafeLink URL:</label>
-                <textarea
-                    id="safelink-input"
-                    placeholder="Paste your SafeLink URL here (e.g., https://can01.safelinks.protection.outlook.com/?url=...)"
-                    rows="4"
-                ></textarea>
-                <button id="decode-btn" class="btn-primary">
-                    <span class="btn-text">Decode URL</span>
-                    <span class="btn-icon">→</span>
-                </button>
-            </div>
+  <!-- HEADER -->
+  <header class="pt-header" role="banner">
+    <a class="pt-skiplink" href="#main">Skip to content</a>
+    <div class="pt-princeton-bar"><div class="pt-container">
+      <a href="https://www.princeton.edu" class="pt-pu-logo" title="Princeton University">
+        <img src="assets/logos/pu-logo.svg" alt="Princeton University" />
+      </a>
+    </div></div>
 
-            <div id="result-section" class="result-section hidden">
-                <div class="result-header">
-                    <h2>Decoded URL</h2>
-                    <button id="copy-btn" class="btn-copy" title="Copy to clipboard">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                        </svg>
-                        Copy
-                    </button>
-                </div>
-                <div class="result-content">
-                    <a id="decoded-url" href="#" target="_blank" rel="noopener noreferrer"></a>
-                </div>
-            </div>
+    <div class="pt-site-branding"><div class="pt-container pt-site-branding__row">
+      <div class="pt-site-info">
+        <p class="pt-site-name"><a href="/">SafeLink URL Decoder</a></p>
+        <p class="pt-site-slogan">Secure & Private URL Extraction Companion</p>
+      </div>
+      <a href="https://engineering.princeton.edu" class="pt-seas-lockup">
+        <img src="assets/logos/princeton-engineering-linear-white.png" alt="School of Engineering and Applied Science" />
+      </a>
+    </div></div>
 
-            <div id="error-section" class="error-section hidden">
-                <div class="error-icon">⚠️</div>
-                <p id="error-message"></p>
-            </div>
+    <nav class="pt-main-menu" aria-label="Main">
+      <div class="pt-container">
+        <button class="pt-nav-toggle" type="button" aria-controls="pt-menu" aria-expanded="false">
+          <span class="pt-nav-toggle__label">Menu</span> ☰
+        </button>
+        <div id="pt-menu" class="pt-nav-collapse">
+          <ul class="pt-nav pt-nav--main" role="list">
+            <li class="pt-nav__item"><a href="#" class="is-active">Decoder</a></li>
+            <li class="pt-nav__item"><a href="https://github.com/pubino/sanelink" target="_blank" rel="noopener noreferrer">Source Code</a></li>
+          </ul>
+          <ul class="pt-nav pt-nav--utility" role="list">
+            <li><a href="https://orfe.princeton.edu" target="_blank" rel="noopener noreferrer">orfe.princeton.edu</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-            <div class="info-section">
-                <h3>How It Works</h3>
-                <ul>
-                    <li><strong>Paste URL:</strong> Enter the SafeLink URL from your email or browser</li>
-                    <li><strong>Decode:</strong> The tool extracts and decodes the destination URL</li>
-                    <li><strong>Privacy:</strong> All processing happens in your browser - nothing is sent to any server</li>
-                </ul>
-            </div>
-        </main>
-
-        <footer>
-            <p>All decoding happens locally in your browser. No data is transmitted or stored.</p>
-        </footer>
+  <!-- MAIN CONTENT CONTAINER -->
+  <main id="main">
+    <!-- Inner page title strip -->
+    <div class="pt-page-title">
+      <div class="pt-container">
+        <h1>SafeLink URL Decoder</h1>
+      </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- 2-column layout container -->
+    <div class="pt-container pt-block">
+      <div class="pt-cols-2-wide">
+        
+        <!-- Left Side: Decrypter Surface -->
+        <section class="pt-outline-light pt-surface decoder-card">
+          <div class="pt-form">
+            <div class="pt-field">
+              <label class="pt-field__label" for="safelink-input">Enter SafeLink URL</label>
+              <textarea
+                class="pt-textarea"
+                id="safelink-input"
+                placeholder="Paste your SafeLink URL here (e.g., https://can01.safelinks.protection.outlook.com/?url=...)"
+                rows="6"
+              ></textarea>
+              <small class="pt-field__hint">Supports standard MS SafeLink queries and nested URLs.</small>
+            </div>
+            
+            <div class="pt-form__actions" style="border: none; padding-top: 0; margin-top: var(--space-2);">
+              <button id="decode-btn" class="pt-btn pt-btn--primary pt-btn--round-corners decode-button">
+                Decode URL &nbsp;→
+              </button>
+            </div>
+          </div>
+
+          <!-- Result Area -->
+          <div id="result-section" class="pt-outline-orange pt-surface--brand result-area hidden">
+            <div class="result-card-header">
+              <h2 class="result-title">Decoded Destination</h2>
+              <button id="copy-btn" class="pt-btn pt-btn--secondary pt-btn--round-corners copy-button" title="Copy to clipboard">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="copy-icon">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span>Copy</span>
+              </button>
+            </div>
+            <div class="result-content-box">
+              <a id="decoded-url" href="#" target="_blank" rel="noopener noreferrer"></a>
+            </div>
+          </div>
+
+          <!-- Error Area -->
+          <div id="error-section" class="error-area hidden">
+            <div class="error-header">
+              <span class="error-icon">⚠️</span>
+              <h2 class="error-title">Decoding Error</h2>
+            </div>
+            <p id="error-message"></p>
+          </div>
+        </section>
+
+        <!-- Right Side: Sidebar Cards -->
+        <aside class="pt-stack">
+          <!-- Siempre Accent Customizer Card -->
+          <div class="pt-surface--neutral pt-outline-light info-card siempre-card">
+            <h2 class="pt-block-heading">
+              <span>Theme Customizer</span>
+            </h2>
+            <p class="privacy-text" style="margin-bottom: var(--space-4);">
+              Select a custom color. Dynamic HSL calculations update highlights, borders, and buttons in real-time.
+            </p>
+            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: var(--space-3);">
+              <input type="color" class="siempre-color-picker" style="border: 1px solid var(--color-neutral-20); padding: 2px; border-radius: var(--radius-sm); width: 48px; height: 36px; cursor: pointer; background: white;" />
+              <input type="text" class="siempre-color-text" style="flex: 1; border: 1px solid var(--color-neutral-20); border-radius: var(--radius-sm); padding: 6px 10px; font-family: var(--font-mono); font-size: var(--font-size-sm); background: white;" placeholder="#e77500" />
+            </div>
+            <button class="siempre-color-reset pt-btn pt-btn--outline" style="width: 100%; font-size: var(--font-size-xs); padding: 6px 12px; justify-content: center; --btn-border-radius: var(--radius-sm);">
+              Reset Default
+            </button>
+          </div>
+
+          <!-- How It Works -->
+          <div class="pt-surface--neutral pt-outline-light info-card">
+            <h2 class="pt-block-heading">
+              <span>How It Works</span>
+            </h2>
+            <ul class="pt-list info-list" role="list">
+              <li>
+                <strong>Detect Redirection:</strong> Extracts original targets from outlook/exchange protection wrappers.
+              </li>
+              <li>
+                <strong>Clean Parameters:</strong> Recursively handles nested parameter blocks and redirects.
+              </li>
+              <li>
+                <strong>Strip Trackers:</strong> Eliminates extra analytical fragments for a clean url.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Privacy Details -->
+          <div class="pt-surface--neutral pt-outline-light info-card">
+            <h2 class="pt-block-heading">
+              <span>Privacy-First design</span>
+            </h2>
+            <p class="privacy-text">
+              All URL parsing happens entirely inside your browser's sandboxed environment. No data is stored, cookies are not used, and no tracking scripts are embedded.
+            </p>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="pt-footer" role="contentinfo">
+    <div class="pt-container">
+      <div class="pt-footer__grid">
+        <section class="pt-footer__col">
+          <p>
+            <strong>SafeLink URL Decoder</strong><br />
+            Princeton Operations Research &amp; Financial Engineering (ORFE) Companion Tool.<br />
+            Sherrerd Hall, Charlton St, Princeton, NJ 08544
+          </p>
+        </section>
+        <section class="pt-footer__col">
+          <ul class="pt-social-links pt-social-links--horizontal" role="list">
+            <li><a href="https://github.com/pubino/sanelink" aria-label="GitHub Repository">gh</a></li>
+            <li><a href="https://orfe.princeton.edu" aria-label="Princeton ORFE Site">web</a></li>
+          </ul>
+        </section>
+        <section class="pt-footer__col">
+          <p>Built using the Paper Tiger resource kit. Designed to match live Princeton themes.</p>
+          <a href="https://engineering.princeton.edu" class="pt-seas-stacked">
+            <img src="assets/logos/princeton-engineering-stacked-white.png" alt="Princeton Engineering" />
+          </a>
+        </section>
+      </div>
+      <div class="pt-subfooter">
+        <ul class="pt-subfooter__links" role="list">
+          <li><a href="https://www.princeton.edu/diversity" target="_blank" rel="noopener noreferrer">Diversity &amp; Non-Discrimination</a></li>
+          <li><a href="https://accessibility.princeton.edu" target="_blank" rel="noopener noreferrer">Accessibility Help</a></li>
+        </ul>
+        <p class="pt-subfooter__copy">© <span id="pt-year">2026</span> The Trustees of Princeton University. All rights reserved.</p>
+        <a href="https://www.princeton.edu" class="pt-subfooter__shield" title="Princeton University">
+          <img src="assets/logos/pu-logo-stacked.svg" alt="Princeton University" />
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="components/main.js"></script>
+  <script src="components/siempre-customizer.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
