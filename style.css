@@ -3,19 +3,57 @@
  * Builds on top of the Paper Tiger design system (tokens.css).
  */
 
-/* Main decoder box styling */
+/* Centered page layout */
+body {
+  background-color: var(--color-neutral-5) !important;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  margin: 0;
+}
+
+.centered-layout {
+  width: 100%;
+  max-width: 680px;
+}
+
+/* Main decoder box styling - adopting Siempre's soft card style */
 .decoder-card {
   padding: var(--space-8);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
   border: 1px solid var(--color-neutral-20);
-  border-left: 4px solid var(--siempre-accent);
+  border-left: 5px solid var(--siempre-accent);
   background: var(--color-white);
   transition: all 0.3s ease;
 }
 
 .decoder-card:hover {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07);
+}
+
+/* Card header styling */
+.decoder-header {
+  border-bottom: 2px solid var(--color-neutral-10);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.decoder-title {
+  margin: 0 !important;
+  font-size: var(--font-size-h2) !important;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-neutral-100);
+}
+
+.decoder-subtitle {
+  margin: var(--space-1) 0 0 0 !important;
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-60);
+  font-family: var(--font-label);
 }
 
 /* Make textarea look great */
@@ -55,7 +93,7 @@
   transform: translateY(1px);
 }
 
-/* Result box layout */
+/* Result box layout - adopting Siempre's alert card style */
 .result-area {
   margin-top: var(--space-8);
   padding: var(--space-6);
@@ -127,7 +165,7 @@
   border-color: var(--color-brand-70);
 }
 
-/* Error area styling */
+/* Error area styling - adopting Siempre's error card style */
 .error-area {
   margin-top: var(--space-8);
   padding: var(--space-6);
@@ -169,37 +207,6 @@
   display: none !important;
 }
 
-/* Sidebar info styling */
-.info-card {
-  padding: var(--space-6);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  background: #fafbfc;
-  border: 1px solid var(--color-neutral-20);
-  border-left: 3.5px solid var(--siempre-accent);
-}
-
-.info-list {
-  padding-left: var(--space-5) !important;
-  margin: 0;
-  line-height: 1.6;
-  font-size: var(--font-size-sm);
-}
-
-.info-list li {
-  margin-bottom: var(--space-3);
-}
-
-.info-list li:last-child {
-  margin-bottom: 0;
-}
-
-.privacy-text {
-  margin: 0;
-  font-size: var(--font-size-sm);
-  line-height: 1.6;
-  color: var(--color-neutral-85);
-}
-
 /* Keyboard focus states */
 textarea:focus-visible {
   outline: 2px solid var(--color-focus-outline);
@@ -220,6 +227,10 @@ textarea:focus-visible {
 
 /* Mobile responsive padding adjustments */
 @media (max-width: 48rem) {
+  body {
+    padding: var(--space-4);
+  }
+
   .decoder-card {
     padding: var(--space-5);
   }
