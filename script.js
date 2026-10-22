@@ -17,12 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const wrappedUrl = input.value.trim();
 
         if (!wrappedUrl) {
-            showError('Please enter a SafeLink URL');
+            showError('Please enter a SafeLink or Google News URL');
             return;
         }
 
         try {
-            const finalUrl = window.LinkDecoder.decodeSafeLink(wrappedUrl);
+            const finalUrl = window.LinkDecoder.decodeLink(wrappedUrl);
             showResult(finalUrl);
         } catch (error) {
             showError(error.message);

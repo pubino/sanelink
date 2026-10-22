@@ -1,6 +1,6 @@
 # SafeLink URL Decoder
 
-A client-side web application for decoding Microsoft SafeLink URLs to reveal their final destinations. All processing happens locally in your browser for complete privacy.
+A client-side web application for decoding Microsoft SafeLink and Google News URLs to reveal their final destinations. All processing happens locally in your browser for complete privacy.
 
 ## Features
 
@@ -20,6 +20,12 @@ SafeLink URLs are used by Microsoft Outlook to wrap external links for security.
 3. Checking for nested URLs (such as additional scanner/proxy URLs)
 4. Removing URL fragments for a clean final result
 
+### Google News links
+
+Google News article links (`news.google.com/articles/…`, `/rss/articles/…`, `/read/…`) carry a base64url-encoded protobuf ID. The decoder reads that ID locally and returns the embedded publisher URL.
+
+**Limitation:** links created since mid-2024 usually use an opaque ID (it decodes to a token starting with `AU_yqL`) that holds no destination URL. Only Google's servers can resolve these. To keep the zero-network guarantee, the app reports that the link can't be decoded offline rather than contacting Google.
+
 ### Example
 
 **SafeLink URL:**
@@ -34,11 +40,13 @@ https://example.com
 
 ## Installation
 
-Simply host the three files on any web server:
+Simply host the static files on any web server:
 
 - `index.html`
 - `style.css`
+- `decoder.js`
 - `script.js`
+- `components/`, `tokens/`, `assets/`
 
 No build process or dependencies required.
 
@@ -56,6 +64,16 @@ No build process or dependencies required.
 - No external dependencies
 - Uses modern Web APIs (URL, URLSearchParams, Clipboard API)
 - Fully compatible with modern browsers
+
+## Testing
+
+The decoders are covered by Node's built-in test runner (no dependencies):
+
+```sh
+npm test
+# or, in a container
+docker build -t sanelink-test . && docker run --rm sanelink-test
+```
 
 ## Privacy
 

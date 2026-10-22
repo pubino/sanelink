@@ -1,0 +1,13 @@
+{
+  "name": "sanelink",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Client-side decoder for Microsoft SafeLink and Google News URLs",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
